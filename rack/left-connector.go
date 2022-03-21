@@ -15,6 +15,7 @@ type LeftConnector struct {
 	Type      BaseType
 
 	BaseAttachment *Anchor
+	RightConnector *Anchor
 }
 
 func NewLeftConnector(cfg Config, typ BaseType) *LeftConnector {
@@ -27,12 +28,15 @@ func NewLeftConnector(cfg Config, typ BaseType) *LeftConnector {
 func (o *LeftConnector) Build() Primitive {
 	pinHoleOffset := (o.Cfg.Depth - o.Cfg.BaseWidth) / 2
 	attachmentZOffset := -o.Cfg.BaseHeight / 4
+	rightConnectorZOffset := -o.Cfg.BaseHeight / 4
 
 	if o.Type == Top {
 		attachmentZOffset *= -1
 	}
 
 	o.BaseAttachment = NewAnchor()
+	o.RightConnector = NewAnchor()
+
 	o.Primitive =
 		NewDifference(
 			// Base block
@@ -51,6 +55,14 @@ func (o *LeftConnector) Build() Primitive {
 				// The anchor for attaching the connector to a base
 				NewTranslation(
 					Vec3{o.Cfg.BaseWidth / 2, -o.Cfg.BaseWidth / 2, attachmentZOffset},
-					o.BaseAttachment)))
+					o.BaseAttachment),
+
+				// Right connector anchor
+				NewTranslation(
+					Vec3{0, 0, rightConnectorZOffset},
+					o.RightConnector,
+				),
+			),
+		)
 	return o.Primitive
 }
