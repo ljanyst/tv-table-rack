@@ -12,6 +12,9 @@ import (
 type Column struct {
 	Primitive Primitive
 	Cfg       Config
+
+	BaseBottom *Anchor
+	BaseTop    *Anchor
 }
 
 func NewColumn(cfg Config) *Column {
@@ -19,6 +22,9 @@ func NewColumn(cfg Config) *Column {
 }
 
 func (o *Column) Build() Primitive {
+	o.BaseBottom = NewAnchor()
+	o.BaseTop = NewAnchor()
+
 	o.Primitive =
 		NewDifference(
 
@@ -28,12 +34,14 @@ func (o *Column) Build() Primitive {
 			// Top pin hole
 			NewTranslation(
 				Vec3{0, 0, o.Cfg.Height / 2},
-				NewCylinder(2.2*o.Cfg.PinHeight, o.Cfg.PinRadius+0.1).SetFn(48)),
+				NewCylinder(2.2*o.Cfg.PinHeight, o.Cfg.PinRadius+0.1).SetFn(48),
+				o.BaseTop),
 
 			// Bottom pin hole
 			NewTranslation(
 				Vec3{0, 0, -o.Cfg.Height / 2},
-				NewCylinder(2.2*o.Cfg.PinHeight, o.Cfg.PinRadius+0.1).SetFn(48)),
+				NewCylinder(2.2*o.Cfg.PinHeight, o.Cfg.PinRadius+0.1).SetFn(48),
+				o.BaseBottom),
 		)
 	return o.Primitive
 }
