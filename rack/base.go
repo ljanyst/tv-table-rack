@@ -40,8 +40,8 @@ func (o *Base) Build() Primitive {
 	// Offset of the front/back blocks
 	offsetY := (o.Cfg.Depth - o.Cfg.BaseWidth) / 2
 
-	// Z offset of the left connector (it's anchor point is in the middle)
-	leftConnectorZOffset := -o.Cfg.BaseHeight / 2
+	// Z offset of the right connector's connecting anchor
+	rightConnectorZOffset := -o.Cfg.BaseHeight / 2
 
 	// Z offest of the hinge
 	hingeZOffset := o.Cfg.BaseHeight / 2
@@ -53,7 +53,7 @@ func (o *Base) Build() Primitive {
 	// We need to make some adjustments for the top base
 	if o.Type == Top {
 		// Hinges are at the bottom if we're creating the top base
-		leftConnectorZOffset *= -1
+		rightConnectorZOffset *= -1
 		hingeZOffset *= -1
 		hingeZOffset -= o.Cfg.BaseHingeHeight
 
@@ -113,17 +113,17 @@ func (o *Base) Build() Primitive {
 				// Front block
 				NewCube(Vec3{width, o.Cfg.BaseWidth, o.Cfg.BaseHeight}),
 
-				// Left connector
-				NewTranslation(
-					Vec3{width / 2, -o.Cfg.BaseWidth / 2, leftConnectorZOffset},
-					utils.AlignHere(lc.BaseAttachment).Add(lc.Primitive)),
-
 				// Right connector
 				NewTranslation(
-					Vec3{-width / 2, -o.Cfg.BaseWidth / 2, 0},
+					Vec3{width / 2, -o.Cfg.BaseWidth / 2, rightConnectorZOffset},
 					utils.AlignHere(rc.BaseAttachment).Add(rc.Primitive)),
 
-				// Gront hinge
+				// Left connector
+				NewTranslation(
+					Vec3{-width / 2, -o.Cfg.BaseWidth / 2, 0},
+					utils.AlignHere(lc.BaseAttachment).Add(lc.Primitive)),
+
+				// Front hinge
 				NewTranslation(
 					Vec3{
 						-width/2 + o.Cfg.DrawerHingeWidth + 0.25,

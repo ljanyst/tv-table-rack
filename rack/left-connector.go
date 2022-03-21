@@ -8,28 +8,49 @@ import (
 	. "github.com/ljanyst/ghostscad/primitive"
 )
 
+// The connector on the left side of the base
 type LeftConnector struct {
 	Primitive Primitive
 	Cfg       Config
+	Type      BaseType
+
+	BaseAttachment *Anchor
 }
 
-func NewLeftConnector(cfg Config) *LeftConnector {
-	return &LeftConnector{Cfg: cfg}
+func NewLeftConnector(cfg Config, typ BaseType) *LeftConnector {
+	return &LeftConnector{
+		Cfg:  cfg,
+		Type: typ,
+	}
 }
 
 func (o *LeftConnector) Build() Primitive {
-	pinYOffset := (o.Cfg.Width - o.Cfg.BaseWidth) / 2
-	pinZOffset := o.Cfg.PinHeight - o.Cfg.BaseHeight/4
-	pinHeight := (o.Cfg.BaseHeight + o.Cfg.PinHeight)
+	pinHoleOffset := (o.Cfg.Depth - o.Cfg.BaseWidth) / 2
+	attachmentZOffset := -o.Cfg.BaseHeight / 4
+
+	if o.Type == Top {
+		attachmentZOffset *= -1
+	}
+
+	o.BaseAttachment = NewAnchor()
 	o.Primitive =
-		NewList(
-			NewCube(Vec3{o.Cfg.BaseWidth, o.Cfg.Width, o.Cfg.BaseHeight / 2}),
+		NewDifference(
+			// Base block
+			NewCube(Vec3{o.Cfg.BaseWidth, o.Cfg.Depth, o.Cfg.BaseHeight / 2}),
+
+			// Back pin hole
 			NewTranslation(
-				Vec3{0, pinYOffset, pinZOffset},
-				NewCylinder(pinHeight, o.Cfg.PinRadius).SetFn(48)),
+				Vec3{0, pinHoleOffset, 0},
+				NewCylinder(3*o.Cfg.BaseHeight, o.Cfg.PinRadius+0.1).SetFn(48)),
+
+			// Front pin hole
 			NewTranslation(
-				Vec3{0, -pinYOffset, pinZOffset},
-				NewCylinder(pinHeight, o.Cfg.PinRadius).SetFn(48)),
-		)
+				Vec3{0, -pinHoleOffset, 0},
+				NewCylinder(3*o.Cfg.BaseHeight, o.Cfg.PinRadius+0.1).SetFn(48),
+
+				// The anchor for attaching the connector to a base
+				NewTranslation(
+					Vec3{o.Cfg.BaseWidth / 2, -o.Cfg.BaseWidth / 2, attachmentZOffset},
+					o.BaseAttachment)))
 	return o.Primitive
 }
