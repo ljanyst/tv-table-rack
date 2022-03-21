@@ -15,6 +15,9 @@ type RightConnector struct {
 	Type      BaseType
 
 	BaseAttachment *Anchor
+	LeftConnector  *Anchor
+	FrontColumn    *Anchor
+	BackColumn     *Anchor
 }
 
 func NewRightConnector(cfg Config, typ BaseType) *RightConnector {
@@ -29,13 +32,24 @@ func (o *RightConnector) Build() Primitive {
 	pinZOffset := o.Cfg.PinHeight - o.Cfg.BaseHeight/4
 	pinHeight := (o.Cfg.BaseHeight + o.Cfg.PinHeight)
 	attachmentZOffset := -o.Cfg.BaseHeight / 4
+	leftConnectorZBase := -o.Cfg.BaseHeight / 4
+	leftConnectorZOffset := o.Cfg.BaseHeight / 2
+	columnZOffset := o.Cfg.BaseHeight
 
+	// We do stuff at the other side if it's a top base
 	if o.Type == Top {
 		pinZOffset *= -1
 		attachmentZOffset *= -1
+		leftConnectorZBase *= -1
+		leftConnectorZOffset = -o.Cfg.BaseHeight
+		columnZOffset *= -1
 	}
 
 	o.BaseAttachment = NewAnchor()
+	o.LeftConnector = NewAnchor()
+	o.FrontColumn = NewAnchor()
+	o.BackColumn = NewAnchor()
+
 	o.Primitive =
 		NewList(
 			// Base block
@@ -49,7 +63,28 @@ func (o *RightConnector) Build() Primitive {
 			// Front pin
 			NewTranslation(
 				Vec3{0, -pinYOffset, pinZOffset},
-				NewCylinder(pinHeight, o.Cfg.PinRadius).SetFn(48)),
+				NewCylinder(pinHeight, o.Cfg.PinRadius).SetFn(48),
+			),
+
+			// Left anchor
+			NewTranslation(
+				Vec3{0, -pinYOffset, leftConnectorZBase},
+
+				// Left connector anchor
+				NewTranslation(
+					Vec3{0, 0, leftConnectorZOffset},
+					o.LeftConnector),
+
+				// Front left column
+				NewTranslation(
+					Vec3{0, 0, columnZOffset},
+					o.FrontColumn),
+			),
+
+			// Left connector anchor
+			NewTranslation(
+				Vec3{0, pinYOffset, leftConnectorZBase + columnZOffset},
+				o.BackColumn),
 
 			// The anchor for attaching the connector to a base
 			NewTranslation(
