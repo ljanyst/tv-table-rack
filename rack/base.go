@@ -23,6 +23,11 @@ type Base struct {
 	Cfg       Config
 	Type      BaseType
 	Width     float64
+
+	LeftConnector  *Anchor
+	FrontColumn    *Anchor
+	BackColumn     *Anchor
+	RightConnector *Anchor
 }
 
 func NewBase(cfg Config, width float64, typ BaseType) *Base {
@@ -78,6 +83,11 @@ func (o *Base) Build() Primitive {
 	rc := NewRightConnector(o.Cfg, o.Type)
 	lc.Build()
 	rc.Build()
+
+	o.LeftConnector = rc.LeftConnector
+	o.RightConnector = lc.RightConnector
+	o.FrontColumn = rc.FrontColumn
+	o.BackColumn = rc.BackColumn
 
 	o.Primitive =
 		NewList(
