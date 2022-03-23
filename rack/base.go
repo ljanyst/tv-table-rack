@@ -28,6 +28,7 @@ type Base struct {
 	FrontColumn    *Anchor
 	BackColumn     *Anchor
 	RightConnector *Anchor
+	DrawerScrew    *Anchor
 }
 
 func NewBase(cfg Config, width float64, typ BaseType) *Base {
@@ -64,6 +65,7 @@ func (o *Base) Build() Primitive {
 
 		// The small extension of the drawer hinge to allow for screwing the drawer
 		// to the base
+		o.DrawerScrew = NewAnchor()
 		screwAttachment = NewTranslation(
 			Vec3{
 				o.Cfg.BaseHingeWidth / 2,
@@ -75,7 +77,11 @@ func (o *Base) Build() Primitive {
 					o.Cfg.BaseHingeWidth,
 					o.Cfg.BaseHingeHeight,
 				}),
-				NewCylinder(3*o.Cfg.BaseHingeHeight, 1.5).SetFn(48)))
+				NewCylinder(3*o.Cfg.BaseHingeHeight, 1.5).SetFn(48),
+				NewTranslation(
+					Vec3{0, 0, -o.Cfg.BaseHingeHeight / 2},
+					o.DrawerScrew),
+			))
 	}
 
 	// Connectors connecting this base to other bases
