@@ -16,6 +16,8 @@ func main() {
 		30, // Power board
 		30, // Power board
 		30, // Power board
+		35, // Router board
+		35, // Router board
 	}
 	basesBottom := []*Base{}
 	basesTop := []*Base{}
@@ -96,12 +98,34 @@ func main() {
 	tr = utils.Align(basesTop[0].LeftConnector, lBlindTop.RightConnector)
 	rack.Add(tr.Add(lBlindTop.Primitive))
 
+	// Power drawers
+	var pd *DrawerPower
+	for i := 0; i < 3; i++ {
+		pd = NewDrawerPower(cfg)
+		pd.Build()
+		tr = utils.Align(basesTop[i].DrawerScrew, pd.BaseScrew)
+		rack.Add(tr.Add(pd.Primitive))
+	}
+
+	// Router drawers
+	var rd *DrawerRouter
+	for i := 3; i < 5; i++ {
+		rd = NewDrawerRouter(cfg)
+		rd.Build()
+		tr = utils.Align(basesTop[i].DrawerScrew, rd.BaseScrew)
+		rack.Add(tr.Add(rd.Primitive))
+	}
+
 	sys.RenderMultiple(map[string]Primitive{
-		"right-blind":       rBlindBottom.Primitive,
-		"left-blind":        lBlindBottom.Primitive,
-		"column":            col.Primitive,
-		"base-power-bottom": basesBottom[0].Primitive,
-		"base-power-top":    basesTop[0].Primitive,
-		"rack":              rack,
+		"right-blind":        rBlindBottom.Primitive,
+		"left-blind":         lBlindBottom.Primitive,
+		"column":             col.Primitive,
+		"base-power-bottom":  basesBottom[0].Primitive,
+		"base-power-top":     basesTop[0].Primitive,
+		"base-router-bottom": basesBottom[3].Primitive,
+		"base-router-top":    basesTop[3].Primitive,
+		"power-drawer":       pd.Primitive,
+		"router-drawer":      rd.Primitive,
+		"rack":               rack,
 	}, "rack")
 }
