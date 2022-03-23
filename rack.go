@@ -18,6 +18,8 @@ func main() {
 		30, // Power board
 		35, // Router board
 		35, // Router board
+		35, // KVM
+		25, // Pi
 	}
 	basesBottom := []*Base{}
 	basesTop := []*Base{}
@@ -116,6 +118,17 @@ func main() {
 		rack.Add(tr.Add(rd.Primitive))
 	}
 
+	rpd := []*DrawerRPi{
+		NewDrawerRPi(cfg, true),
+		NewDrawerRPi(cfg, false),
+	}
+
+	for i := 5; i < 7; i++ {
+		rpd[i-5].Build()
+		tr = utils.Align(basesTop[i].DrawerScrew, rpd[i-5].BaseScrew)
+		rack.Add(tr.Add(rpd[i-5].Primitive))
+	}
+
 	sys.RenderMultiple(map[string]Primitive{
 		"right-blind":        rBlindBottom.Primitive,
 		"left-blind":         lBlindBottom.Primitive,
@@ -126,6 +139,8 @@ func main() {
 		"base-router-top":    basesTop[3].Primitive,
 		"power-drawer":       pd.Primitive,
 		"router-drawer":      rd.Primitive,
+		"rpi-drawer":         rpd[1].Primitive,
+		"kvm-drawer":         rpd[0].Primitive,
 		"rack":               rack,
 	}, "rack")
 }
