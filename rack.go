@@ -20,6 +20,8 @@ func main() {
 		35, // Router board
 		35, // KVM
 		25, // Pi
+		10, // Disk T5
+		10, // Disk T7
 	}
 	basesBottom := []*Base{}
 	basesTop := []*Base{}
@@ -118,6 +120,7 @@ func main() {
 		rack.Add(tr.Add(rd.Primitive))
 	}
 
+	// Raspberry Pis
 	rpd := []*DrawerRPi{
 		NewDrawerRPi(cfg, true),
 		NewDrawerRPi(cfg, false),
@@ -129,6 +132,18 @@ func main() {
 		rack.Add(tr.Add(rpd[i-5].Primitive))
 	}
 
+	// Disks
+	dd := []*DrawerDisk{
+		NewDrawerDisk(cfg, Vec3{57, 85, 8}),
+		NewDrawerDisk(cfg, Vec3{57, 75, 11}),
+	}
+
+	for i := 7; i < 9; i++ {
+		dd[i-7].Build()
+		tr = utils.Align(basesTop[i].DrawerScrew, dd[i-7].BaseScrew)
+		rack.Add(tr.Add(dd[i-7].Primitive))
+	}
+
 	sys.RenderMultiple(map[string]Primitive{
 		"right-blind":        rBlindBottom.Primitive,
 		"left-blind":         lBlindBottom.Primitive,
@@ -138,9 +153,17 @@ func main() {
 		"base-router-bottom": basesBottom[3].Primitive,
 		"base-router-top":    basesTop[3].Primitive,
 		"power-drawer":       pd.Primitive,
+		"base-rpi-bottom":    basesBottom[6].Primitive,
+		"base-rpi-top":       basesTop[6].Primitive,
+		"base-kvm-bottom":    basesBottom[5].Primitive,
+		"base-kvm-top":       basesTop[5].Primitive,
+		"base-disk-bottom":   basesBottom[7].Primitive,
+		"base-disk-top":      basesTop[7].Primitive,
 		"router-drawer":      rd.Primitive,
 		"rpi-drawer":         rpd[1].Primitive,
 		"kvm-drawer":         rpd[0].Primitive,
+		"disk-drawer-t5":     dd[1].Primitive,
+		"disk-drawer-t7":     dd[0].Primitive,
 		"rack":               rack,
 	}, "rack")
 }
