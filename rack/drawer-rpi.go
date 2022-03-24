@@ -85,9 +85,9 @@ func (o *DrawerRPi) Build() Primitive {
 	if o.Module {
 		bb := base.Corners[3]
 		pts = []Vec2{
-			{bb[0] - 22.5, bb[1] - 29.5},
-			{bb[0] - 22.5, bb[1]},
-			{bb[0], bb[1] - 29.5},
+			{bb[0] - 23, bb[1] - 30},
+			{bb[0] - 23, bb[1]},
+			{bb[0], bb[1] - 30},
 			bb,
 		}
 		buildPts(pts, bb)
