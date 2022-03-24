@@ -62,7 +62,7 @@ func (o *DrawerRPi) Build() Primitive {
 			sub.Add(
 				NewTranslation(
 					Vec3{p[0], p[1], 0},
-					NewCylinder(14, 1).SetFn(48)),
+					NewCylinder(14, 1.35).SetFn(48)),
 				NewTranslation(
 					Vec3{p[0], p[1], (-o.Cfg.DrawerWidth + 1.8) / 2},
 					NewCylinder(2, 2.75).SetFn(48)))
@@ -73,9 +73,9 @@ func (o *DrawerRPi) Build() Primitive {
 	fu := base.Corners[0]
 	pts := []Vec2{
 		fu,
-		{fu[0] + 48.5, fu[1]},
-		{fu[0], fu[1] + 57.5},
-		{fu[0] + 48.5, fu[1] + 57.5},
+		{fu[0] + 49.5, fu[1]},
+		{fu[0], fu[1] + 58.5},
+		{fu[0] + 49.5, fu[1] + 58.5},
 	}
 	buildPts(pts, fu)
 	buildLine([]Vec2{pts[1], pts[3]})
