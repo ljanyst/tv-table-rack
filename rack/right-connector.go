@@ -58,13 +58,12 @@ func (o *RightConnector) Build() Primitive {
 			// Back pin
 			NewTranslation(
 				Vec3{0, pinYOffset, pinZOffset},
-				NewCylinder(pinHeight, o.Cfg.PinRadius).SetFn(48)),
+				NewCylinder(pinHeight, o.Cfg.PinRadius)),
 
 			// Front pin
 			NewTranslation(
 				Vec3{0, -pinYOffset, pinZOffset},
-				NewCylinder(pinHeight, o.Cfg.PinRadius).SetFn(48),
-			),
+				NewCylinder(pinHeight, o.Cfg.PinRadius)),
 
 			// Left anchor
 			NewTranslation(

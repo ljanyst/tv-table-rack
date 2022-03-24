@@ -43,7 +43,7 @@ func (o *DrawerDisk) Build() Primitive {
 				NewTranslation(
 					Vec3{o.Dims[2] / 2, 0, 0},
 					NewRotation(Vec3{90, 0, 0},
-						NewCylinder(35, o.Dims[2]/2).SetFn(48)))))
+						NewCylinder(35, o.Dims[2]/2)))))
 	}
 
 	offsetX := o.Dims[0] / 2

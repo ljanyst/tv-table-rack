@@ -45,12 +45,12 @@ func (o *LeftConnector) Build() Primitive {
 			// Back pin hole
 			NewTranslation(
 				Vec3{0, pinHoleOffset, 0},
-				NewCylinder(3*o.Cfg.BaseHeight, o.Cfg.PinRadius+0.1).SetFn(48)),
+				NewCylinder(3*o.Cfg.BaseHeight, o.Cfg.PinRadius+0.1)),
 
 			// Front pin hole
 			NewTranslation(
 				Vec3{0, -pinHoleOffset, 0},
-				NewCylinder(3*o.Cfg.BaseHeight, o.Cfg.PinRadius+0.1).SetFn(48),
+				NewCylinder(3*o.Cfg.BaseHeight, o.Cfg.PinRadius+0.1),
 
 				// The anchor for attaching the connector to a base
 				NewTranslation(

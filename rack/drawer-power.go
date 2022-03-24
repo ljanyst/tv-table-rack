@@ -63,10 +63,10 @@ func (o *DrawerPower) Build() Primitive {
 		lst.Add(
 			NewTranslation(
 				Vec3{p[0], p[1], (-o.Cfg.DrawerWidth + 10) / 2},
-				NewCylinder(10, 2).SetFn(48)),
+				NewCylinder(10, 2)),
 			NewTranslation(
 				Vec3{p[0], p[1], (-o.Cfg.DrawerWidth + 14) / 2},
-				NewCylinder(14, 1).SetFn(48)))
+				NewCylinder(14, 1)))
 	}
 
 	buildLine([]Vec2{pts[0], pts[1]})

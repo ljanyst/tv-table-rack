@@ -90,7 +90,7 @@ func (o *DrawerBase) Build() Primitive {
 					}),
 					NewTranslation(
 						Vec3{0, (attLength - o.Cfg.BaseHingeWidth) / 2, 0},
-						NewCylinder(3*o.Cfg.BaseHingeHeight, 1.5).SetFn(48),
+						NewCylinder(3*o.Cfg.BaseHingeHeight, 1.5),
 						NewTranslation(
 							Vec3{0, 0, o.Cfg.BaseHingeHeight / 2},
 							o.BaseScrew),

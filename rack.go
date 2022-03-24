@@ -10,6 +10,8 @@ import (
 )
 
 func main() {
+	sys.SetFn(48)
+
 	cfg := NewDefaultConfig()
 
 	basesWidth := []float64{

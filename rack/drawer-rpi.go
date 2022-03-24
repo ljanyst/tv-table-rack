@@ -56,16 +56,16 @@ func (o *DrawerRPi) Build() Primitive {
 					NewCylinder(5, 2.5).SetFn(48)),
 				NewTranslation(
 					Vec3{p[0], p[1], 0},
-					NewCylinder(o.Cfg.DrawerWidth, 3.5).SetFn(48)))
+					NewCylinder(o.Cfg.DrawerWidth, 3.5)))
 
 			// Pin holes
 			sub.Add(
 				NewTranslation(
 					Vec3{p[0], p[1], 0},
-					NewCylinder(14, 1.35).SetFn(48)),
+					NewCylinder(14, 1.35)),
 				NewTranslation(
 					Vec3{p[0], p[1], (-o.Cfg.DrawerWidth + 1.8) / 2},
-					NewCylinder(2, 2.75).SetFn(48)))
+					NewCylinder(2, 2.75)))
 		}
 	}
 
