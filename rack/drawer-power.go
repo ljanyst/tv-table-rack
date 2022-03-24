@@ -33,6 +33,14 @@ func (o *DrawerPower) Build() Primitive {
 		base.Primitive,
 	)
 
+	buildLine := func(pts []Vec2) {
+		line := shapes.NewPolyline(pts, 4).SetRound(true)
+		lst.Add(
+			NewLinearExtrusion(
+				o.Cfg.DrawerWidth,
+				line.Build()))
+	}
+
 	// Back-down
 	bd := Vec2{
 		base.Corners[3][0] - 10,
@@ -49,11 +57,7 @@ func (o *DrawerPower) Build() Primitive {
 
 	for i, p := range pts {
 		// Connect the board pin to the frame
-		line := shapes.NewPolyline([]Vec2{base.Corners[i], p}, 4).SetRound(true)
-		lst.Add(
-			NewLinearExtrusion(
-				o.Cfg.DrawerWidth,
-				line.Build()))
+		buildLine([]Vec2{base.Corners[i], p})
 
 		// Add the board pin
 		lst.Add(
@@ -64,6 +68,12 @@ func (o *DrawerPower) Build() Primitive {
 				Vec3{p[0], p[1], (-o.Cfg.DrawerWidth + 14) / 2},
 				NewCylinder(14, 1).SetFn(48)))
 	}
+
+	buildLine([]Vec2{pts[0], pts[1]})
+	buildLine([]Vec2{pts[1], pts[3]})
+	buildLine([]Vec2{pts[3], pts[2]})
+	buildLine([]Vec2{pts[2], pts[0]})
+
 	o.Primitive = lst
 	return o.Primitive
 }
