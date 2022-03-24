@@ -49,9 +49,9 @@ func (o *DrawerPower) Build() Primitive {
 
 	// Connector points to the board
 	pts := []Vec2{
-		{bd[0] - 65.5, bd[1] - 45},
-		{bd[0], bd[1] - 45},
-		{bd[0] - 65.5, bd[1]},
+		{bd[0] - 66.5, bd[1] - 47},
+		{bd[0], bd[1] - 47},
+		{bd[0] - 66.5, bd[1]},
 		bd,
 	}
 
