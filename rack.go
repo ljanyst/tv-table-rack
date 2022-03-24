@@ -20,7 +20,7 @@ func main() {
 		30, // Power board
 		35, // Router board
 		35, // Router board
-		35, // KVM
+		30, // KVM
 		25, // Pi
 		10, // Disk T5
 		10, // Disk T7
