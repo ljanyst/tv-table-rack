@@ -144,6 +144,12 @@ func main() {
 		rack.Add(tr.Add(dd[i-7].Primitive))
 	}
 
+	// Nut for the power board
+	nut := NewDifference(
+		NewCylinder(2.5, 2),
+		NewCylinder(5, 1.1),
+	)
+
 	sys.RenderMultiple(map[string]Primitive{
 		"right-blind":        rBlindBottom.Primitive,
 		"left-blind":         lBlindBottom.Primitive,
@@ -164,6 +170,7 @@ func main() {
 		"kvm-drawer":         rpd[0].Primitive,
 		"disk-drawer-t5":     dd[1].Primitive,
 		"disk-drawer-t7":     dd[0].Primitive,
+		"nut":                nut,
 		"rack":               rack,
 	}, "rack")
 }
