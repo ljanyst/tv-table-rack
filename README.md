@@ -14,5 +14,5 @@ I wrote a [blog post][bp] describing some of the motivations.
 
 [img1]: assets/model.png
 [img2]: assets/parts.jpg
-[bp]: https://jany.st/post/2022-04-04-ghostscad-marying-openscad-and-golang.html
+[bp]: https://jany.st/post/2022-04-04-ghostscad-marrying-openscad-and-golang.html
 
