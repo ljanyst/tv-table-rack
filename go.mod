@@ -2,14 +2,10 @@ module github.com/ljanyst/tv-table-rack
 
 go 1.17
 
-replace github.com/ljanyst/ghostscad => ../ghostscad
+require github.com/go-gl/mathgl v1.0.0
 
 require (
-	github.com/go-gl/mathgl v1.0.0
-	github.com/ljanyst/ghostscad v0.0.0-00010101000000-000000000000
-)
-
-require (
+	github.com/ljanyst/ghostscad v0.1.0 // indirect
 	github.com/mattn/go-colorable v0.1.8 // indirect
 	github.com/mattn/go-isatty v0.0.12 // indirect
 	github.com/mgutz/ansi v0.0.0-20200706080929-d51e80ef957d // indirect
