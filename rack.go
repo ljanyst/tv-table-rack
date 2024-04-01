@@ -136,8 +136,8 @@ func main() {
 
 	// Disks
 	dd := []*DrawerDisk{
-		NewDrawerDisk(cfg, Vec3{57, 85, 8}),
-		NewDrawerDisk(cfg, Vec3{57, 75, 11}),
+		NewDrawerDisk(cfg, Vec3{57, 85, 8}, Vec3{32, 0, 12}),
+		NewDrawerDisk(cfg, Vec3{57, 75, 11}, Vec3{32, 0, 12}),
 	}
 
 	for i := 7; i < 9; i++ {
